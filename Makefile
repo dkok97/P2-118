@@ -11,7 +11,11 @@ client:
 	$(CC) -o client $^ $(CPPFLAGS) client.cpp
 
 clean:
-	rm -rf *.o *~ *.gch *.swp *.dSYM server client *.tar.gz
+	rm -rf *.o *~ *.gch *.swp *.dSYM server client *.tar.gz *.data
+
+# old:
+# 	$(CC) -o server_old $^ $(CPPFLAGS) server_old.cpp
+# 	$(CC) -o client_old $^ $(CPPFLAGS) client_old.cpp
 
 # dist: tarball
 #
