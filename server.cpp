@@ -46,41 +46,82 @@ void error(const char *msg)
 
 void printMessage(Packet* p, string sendOrRec)
 {
-  if (debug) {
-    if (sendOrRec=="send") {
-      fprintf(stderr, "Sending packet SEQ: %i ACK: %i WIN: %i TYPE: %i TRANS: %i INDEX: %i\n", p->getSeqNum(), p->getAckNum(), p->getWinSize(), p->getPacketType(), p->getTransmissions(), p->getPackIndex());
-    }
-    else {
-      fprintf(stderr, "Receiving packet SEQ: %i ACK: %i WIN: %i TYPE: %i TRANS: %i INDEX: %i\n", p->getSeqNum(), p->getAckNum(), p->getWinSize(), p->getPacketType(), p->getTransmissions(), p->getPackIndex());
-    }
-  }
-  // if (sendOrRec=="send") {
-  //   if (p->getTransmissions()>1) {
-  //     if (p->getPacketType()==SYN) {
-  //       fprintf(stderr, "Sending packet %i %i %s %s\n", p->getSeqNum(), p->getWinSize(), "Retransmission", "SYN");
-  //     }
-  //     else if (p->getPacketType()==FIN) {
-  //       fprintf(stderr, "Sending packet %i %i %s %s\n", p->getSeqNum(), p->getWinSize(), "Retransmission", "FIN");
-  //     }
-  //     else {
-  //       fprintf(stderr, "Sending packet %i %i %s\n", p->getSeqNum(), p->getWinSize(), "Retransmission");
-  //     }
+  // if (debug) {
+  //   if (sendOrRec=="send") {
+  //     fprintf(stderr, "Sending packet SEQ: %i ACK: %i WIN: %i TYPE: %i TRANS: %i INDEX: %i, SSTHRESH: %i\n", p->getSeqNum(), p->getAckNum(), p->getWinSize(), p->getPacketType(), p->getTransmissions(), p->getPackIndex(), 15360);
   //   }
   //   else {
-  //     if (p->getPacketType()==SYN) {
-  //       fprintf(stderr, "Sending packet %i %i %s\n", p->getSeqNum(), p->getWinSize(), "SYN");
-  //     }
-  //     else if (p->getPacketType()==FIN) {
-  //       fprintf(stderr, "Sending packet %i %i %s\n", p->getSeqNum(), p->getWinSize(), "FIN");
-  //     }
-  //     else {
-  //       fprintf(stderr, "Sending packet %i %i\n", p->getSeqNum(), p->getWinSize());
-  //     }
+  //     fprintf(stderr, "Receiving packet SEQ: %i ACK: %i WIN: %i TYPE: %i TRANS: %i INDEX: %i\n", p->getSeqNum(), p->getAckNum(), p->getWinSize(), p->getPacketType(), p->getTransmissions(), p->getPackIndex());
   //   }
   // }
-  // else {
-  //   fprintf(stderr, "Receiving packet %i\n", p->getAckNum());
-  // }
+  if (sendOrRec=="send") {
+    if (p->getTransmissions()>1) {
+      if (p->getPacketType()==SYN) {
+        fprintf(stderr, "Sending packet SEQ: %i ACK: %i WIN: %i %s %s %i\n", p->getSeqNum(), p->getAckNum(), p->getWinSize(), "Retransmission", "SYN", 15360);
+      }
+      else if (p->getPacketType()==SYNACK) {
+        fprintf(stderr, "Sending packet SEQ: %i ACK: %i WIN: %i %s %s %i\n", p->getSeqNum(), p->getAckNum(), p->getWinSize(), "Retransmission", "SYNACK", 15360);
+      }
+      else if (p->getPacketType()==ACK) {
+        fprintf(stderr, "Sending packet SEQ: %i ACK: %i WIN: %i %s %s %i\n", p->getSeqNum(), p->getAckNum(), p->getWinSize(), "Retransmission", "ACK", 15360);
+      }
+      else if (p->getPacketType()==FIN) {
+        fprintf(stderr, "Sending packet SEQ: %i ACK: %i WIN: %i %s %s %i\n", p->getSeqNum(), p->getAckNum(), p->getWinSize(), "Retransmission", "FIN", 15360);
+      }
+      else if (p->getPacketType()==FINACK) {
+        fprintf(stderr, "Sending packet SEQ: %i ACK: %i WIN: %i %s %s %i\n", p->getSeqNum(), p->getAckNum(), p->getWinSize(), "Retransmission", "FINACK", 15360);
+      }
+      else if (p->getPacketType()==REG) {
+        fprintf(stderr, "Sending packet SEQ: %i ACK: %i WIN: %i %s %s %i\n", p->getSeqNum(), p->getAckNum(), p->getWinSize(), "Retransmission", "DATA", 15360);
+      }
+      else {
+        fprintf(stderr, "Sending packet %i %i %s %i\n", p->getSeqNum(), p->getWinSize(), "Retransmission", 15360);
+      }
+    }
+    else {
+      if (p->getPacketType()==SYN) {
+        fprintf(stderr, "Sending packet SEQ: %i ACK: %i WIN: %i %s %i\n", p->getSeqNum(), p->getAckNum(), p->getWinSize(), "SYN", 15360);
+      }
+      else if (p->getPacketType()==SYNACK) {
+        fprintf(stderr, "Sending packet SEQ: %i ACK: %i WIN: %i %s %i\n", p->getSeqNum(), p->getAckNum(), p->getWinSize(), "SYNACK", 15360);
+      }
+      else if (p->getPacketType()==ACK) {
+        fprintf(stderr, "Sending packet SEQ: %i ACK: %i WIN: %i %s %i\n", p->getSeqNum(), p->getAckNum(), p->getWinSize(), "ACK", 15360);
+      }
+      else if (p->getPacketType()==FIN) {
+        fprintf(stderr, "Sending packet SEQ: %i ACK: %i WIN: %i %s %i\n", p->getSeqNum(), p->getAckNum(), p->getWinSize(), "FIN", 15360);
+      }
+      else if (p->getPacketType()==FINACK) {
+        fprintf(stderr, "Sending packet SEQ: %i ACK: %i WIN: %i %s %i\n", p->getSeqNum(), p->getAckNum(), p->getWinSize(), "FINACK", 15360);
+      }
+      else if (p->getPacketType()==REG) {
+        fprintf(stderr, "Sending packet SEQ: %i ACK: %i WIN: %i %s %i\n", p->getSeqNum(), p->getAckNum(), p->getWinSize(), "DATA", 15360);
+      }
+      else {
+        fprintf(stderr, "Sending packet %i %i %i\n", p->getSeqNum(), p->getWinSize(), 15360);
+      }
+    }
+  }
+  else {
+    // string type="";
+    // switch(p->getPacketType()) {
+    //   case SYN:
+    //     type="SYN";
+    //   case SYNACK:
+    //     type="SYNACK";
+    //   case ACK:
+    //     type="ACK";
+    //   case FIN:
+    //     type="FIN";
+    //   case FINACK:
+    //     type="FINACK";
+    //   case REG:
+    //     type="DATA";
+    //   default:
+    //     type="NOTHING";
+    // }
+    fprintf(stderr, "Receiving packet SEQ: %i ACK: %i\n", p->getSeqNum(), p->getAckNum());
+  }
 }
 
 void setUpSocket()
@@ -163,9 +204,9 @@ void splitFile(string fname)
               data = text.substr(i*MAXDATASIZE, data.length() - 1);
           }
           packets[i].setData(data, data.length());
+          packets[i].setPacketType(REG);
           packets[i].setSize(data.length());
           packets[i].setPackIndex(i);
-          packets[i].setWinSize(5120);
           packets[i].setAckNum(currAckNum_server);
           packets[i].setSeqNum(currSeqNum_server);
           currSeqNum_server=currSeqNum_server+MAXPACKETSIZE+1;
@@ -202,7 +243,6 @@ void closeConnection()
     int isData=wait_for_data();
     if (isData) {
       Packet *p1 = (Packet*) calloc(1, MAXPACKETSIZE);
-      while (1) {
         n_rec = recvfrom(sockfd, (char*)p1, MAXPACKETSIZE, 0, (struct sockaddr *) &cli_addr, &clilen);
         if (n_rec<0) {
           error("recv");
@@ -216,12 +256,11 @@ void closeConnection()
             error("sendto");
           }
           printMessage(&ack_end, "send");
-          exit(1);
-        }
-        else {
           break;
         }
-      }
+        else {
+          continue;;
+        }
     }
     else {
       continue;
@@ -237,9 +276,10 @@ void sendPackets()
   int p_index=0;
   unsigned int win_index=0;
   int getAck;
+  double cwnd=1;
   splitFile(file_req_name);
   while (1) {
-    unsigned int window_space=WINSIZE/MAXPACKETSIZE-window.size();
+    unsigned int window_space=cwnd-window.size();
     for (unsigned int i=0; i<(window_space) && p_index!=pnumber; i++) {
       window.push_back(packets[p_index].getPackIndex());
       p_index++;
@@ -250,6 +290,7 @@ void sendPackets()
     win_index=0;
     while (win_index!=window.size()) {
       packets[window[win_index]].addTransmission();
+      packets[window[win_index]].setWinSize(MAXPACKETSIZE*window_space);
       n_send = sendto(sockfd, (char*)&packets[window[win_index]], MAXPACKETSIZE, 0, (struct sockaddr *) &cli_addr, clilen);
       printMessage(&packets[window[win_index]], "send");
       if (n_send<0) {
@@ -266,6 +307,12 @@ void sendPackets()
           error("sendto");
         }
         if (ack->getPackIndex()!=-1) {
+          if (cwnd>15360/MAXPACKETSIZE) {
+            cwnd+=1/cwnd;
+          }
+          else {
+            cwnd++;
+          }
           printMessage(ack, "recv");
           window.erase(remove(window.begin(), window.end(), ack->getPackIndex()), window.end());
           if (ack->getPackIndex()==window.back()) {
@@ -359,6 +406,10 @@ int main(int argc, char *argv[])
 
     handshake();
 
+    time_t t = time(0);
+    fprintf(stderr, "%s\n", "WAITIGN FOR 1 SEC");
+    while (difftime(time(0), t)<1) {
+    }
     close(sockfd);
 
     return 0;

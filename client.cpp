@@ -49,41 +49,82 @@ void error(const char *msg)
 
 void printMessage(Packet* p, string sendOrRec)
 {
-  if (debug) {
-    if (sendOrRec=="send") {
-      fprintf(stderr, "Sending packet SEQ: %i ACK: %i WIN: %i TYPE: %i TRANS: %i INDEX: %i\n", p->getSeqNum(), p->getAckNum(), p->getWinSize(), p->getPacketType(), p->getTransmissions(), p->getPackIndex());
-    }
-    else {
-      fprintf(stderr, "Receiving packet SEQ: %i ACK: %i WIN: %i TYPE: %i TRANS: %i INDEX: %i\n", p->getSeqNum(), p->getAckNum(), p->getWinSize(), p->getPacketType(), p->getTransmissions(), p->getPackIndex());
-    }
-  }
-  // if (sendOrRec=="send") {
-  //   if (p->getTransmissions()>1) {
-  //     if (p->getPacketType()==SYN) {
-  //       fprintf(stderr, "Sending packet %i %i %s %s\n", p->getSeqNum(), p->getWinSize(), "Retransmission", "SYN");
-  //     }
-  //     else if (p->getPacketType()==FIN) {
-  //       fprintf(stderr, "Sending packet %i %i %s %s\n", p->getSeqNum(), p->getWinSize(), "Retransmission", "FIN");
-  //     }
-  //     else {
-  //       fprintf(stderr, "Sending packet %i %i %s\n", p->getSeqNum(), p->getWinSize(), "Retransmission");
-  //     }
+  // if (debug) {
+  //   if (sendOrRec=="send") {
+  //     fprintf(stderr, "Sending packet SEQ: %i ACK: %i WIN: %i TYPE: %i TRANS: %i INDEX: %i\n", p->getSeqNum(), p->getAckNum(), p->getWinSize(), p->getPacketType(), p->getTransmissions(), p->getPackIndex());
   //   }
   //   else {
-  //     if (p->getPacketType()==SYN) {
-  //       fprintf(stderr, "Sending packet %i %i %s\n", p->getSeqNum(), p->getWinSize(), "SYN");
-  //     }
-  //     else if (p->getPacketType()==FIN) {
-  //       fprintf(stderr, "Sending packet %i %i %s\n", p->getSeqNum(), p->getWinSize(), "FIN");
-  //     }
-  //     else {
-  //       fprintf(stderr, "Sending packet %i %i\n", p->getSeqNum(), p->getWinSize());
-  //     }
+  //     fprintf(stderr, "Receiving packet SEQ: %i ACK: %i WIN: %i TYPE: %i TRANS: %i INDEX: %i\n", p->getSeqNum(), p->getAckNum(), p->getWinSize(), p->getPacketType(), p->getTransmissions(), p->getPackIndex());
   //   }
   // }
-  // else {
-  //   fprintf(stderr, "Receiving packet %i\n", p->getAckNum());
-  // }
+  if (sendOrRec=="send") {
+    if (p->getTransmissions()>1) {
+      if (p->getPacketType()==SYN) {
+        fprintf(stderr, "Sending packet SEQ: %i ACK: %i WIN: %i %s %s\n", p->getSeqNum(), p->getAckNum(), p->getWinSize(), "Retransmission", "SYN");
+      }
+      else if (p->getPacketType()==SYNACK) {
+        fprintf(stderr, "Sending packet SEQ: %i ACK: %i WIN: %i %s %s\n", p->getSeqNum(), p->getAckNum(), p->getWinSize(), "Retransmission", "SYNACK");
+      }
+      else if (p->getPacketType()==ACK) {
+        fprintf(stderr, "Sending packet SEQ: %i ACK: %i WIN: %i %s %s\n", p->getSeqNum(), p->getAckNum(), p->getWinSize(), "Retransmission", "ACK");
+      }
+      else if (p->getPacketType()==FIN) {
+        fprintf(stderr, "Sending packet SEQ: %i ACK: %i WIN: %i %s %s\n", p->getSeqNum(), p->getAckNum(), p->getWinSize(), "Retransmission", "FIN");
+      }
+      else if (p->getPacketType()==FINACK) {
+        fprintf(stderr, "Sending packet SEQ: %i ACK: %i WIN: %i %s %s\n", p->getSeqNum(), p->getAckNum(), p->getWinSize(), "Retransmission", "FINACK");
+      }
+      else if (p->getPacketType()==REG) {
+        fprintf(stderr, "Sending packet SEQ: %i ACK: %i WIN: %i %s %s\n", p->getSeqNum(), p->getAckNum(), p->getWinSize(), "Retransmission", "DATA");
+      }
+      else {
+        fprintf(stderr, "Sending packet %i WIN: %i %s\n", p->getSeqNum(), p->getWinSize(), "Retransmission");
+      }
+    }
+    else {
+      if (p->getPacketType()==SYN) {
+        fprintf(stderr, "Sending packet SEQ: %i ACK: %i WIN: %i %s\n", p->getSeqNum(), p->getAckNum(), p->getWinSize(), "SYN");
+      }
+      else if (p->getPacketType()==SYNACK) {
+        fprintf(stderr, "Sending packet SEQ: %i ACK: %i WIN: %i %s\n", p->getSeqNum(), p->getAckNum(), p->getWinSize(), "SYNACK");
+      }
+      else if (p->getPacketType()==ACK) {
+        fprintf(stderr, "Sending packet SEQ: %i ACK: %i WIN: %i %s\n", p->getSeqNum(), p->getAckNum(), p->getWinSize(), "ACK");
+      }
+      else if (p->getPacketType()==FIN) {
+        fprintf(stderr, "Sending packet SEQ: %i ACK: %i WIN: %i %s\n", p->getSeqNum(), p->getAckNum(), p->getWinSize(), "FIN");
+      }
+      else if (p->getPacketType()==FINACK) {
+        fprintf(stderr, "Sending packet SEQ: %i ACK: %i WIN: %i %s\n", p->getSeqNum(), p->getAckNum(), p->getWinSize(), "FINACK");
+      }
+      else if (p->getPacketType()==REG) {
+        fprintf(stderr, "Sending packet SEQ: %i ACK: %i WIN: %i %s\n", p->getSeqNum(), p->getAckNum(), p->getWinSize(), "DATA");
+      }
+      else {
+        fprintf(stderr, "Sending packet %i %i\n", p->getSeqNum(), p->getWinSize());
+      }
+    }
+  }
+  else {
+    // string type="";
+    // switch(p->getPacketType()) {
+    //   case 0:
+    //     type="SYN";
+    //   case 1:
+    //     type="SYNACK";
+    //   case 2:
+    //     type="ACK";
+    //   case 3:
+    //     type="FIN";
+    //   case 5:
+    //     type="FINACK";
+    //   case 4:
+    //     type="DATA";
+    //   default:
+    //     type="NOTHING";
+    // }
+    fprintf(stderr, "Receiving packet SEQ: %i ACK: %i\n", p->getSeqNum(), p->getAckNum());
+  }
 }
 
 void setUpSocket()
@@ -131,7 +172,7 @@ void closeConnection(Packet* fin)
     i++;
     if (i==5) {
       fprintf(stderr, "%s\n", "GOT ACK");
-      exit(1);
+      break;
     }
     finAck.addTransmission();
     n_send=sendto(sockfd, (char*)&finAck, MAXPACKETSIZE, 0, (struct sockaddr*)&serv_addr, servlen);
@@ -151,7 +192,7 @@ void closeConnection(Packet* fin)
       }
       else if (p->getPacketType()==ACK) {
         printMessage(p, "recv");
-        exit(1);
+        break;
       }
     }
     else {
@@ -183,7 +224,6 @@ void receivePackets(Packet* fp)
   printMessage(fp, "recv");
   int n=0;
   int n2=0;
-  Packet* p = (Packet*) calloc(1, MAXPACKETSIZE);
   Packet ack;
   ack.setPackIndex(fp->getPackIndex());
   ack.setPacketType(ACK);
@@ -197,22 +237,16 @@ void receivePackets(Packet* fp)
   }
   printMessage(&ack, "send");
   while(1) {
+    Packet* p = (Packet*) calloc(1, MAXPACKETSIZE);
     n = recvfrom(sockfd, (char*)p, MAXPACKETSIZE, 0, (struct sockaddr*)&serv_addr, &servlen);
     if (n<0) {
       error("recvfrom");
     }
     if (p->getPackIndex()==-100) {
+      writePacketsToFile(p);
       break;
     }
     printMessage(p, "recv");
-    ack.setSeqNum(p->getAckNum());
-    ack.setAckNum(p->getSeqNum()+MAXPACKETSIZE+1);         //doesnt matter
-    ack.setPackIndex(p->getPackIndex());
-    n2=sendto(sockfd, (char*)&ack, MAXPACKETSIZE, 0, (struct sockaddr*)&serv_addr, servlen);
-    if (n2<0) {
-      error("sendto");
-    }
-    printMessage(&ack, "send");
     bool alreadyRec=false;
     for (unsigned int j=0; j<packets.size(); j++) {
       if (packets[j]->getPackIndex()==p->getPackIndex()) {
@@ -222,8 +256,15 @@ void receivePackets(Packet* fp)
     if (!alreadyRec) {
       packets.push_back(p);
     }
+    ack.setSeqNum(p->getAckNum());
+    ack.setAckNum(p->getSeqNum()+MAXPACKETSIZE+1);         //doesnt matter
+    ack.setPackIndex(p->getPackIndex());
+    n2=sendto(sockfd, (char*)&ack, MAXPACKETSIZE, 0, (struct sockaddr*)&serv_addr, servlen);
+    if (n2<0) {
+      error("sendto");
+    }
+    printMessage(&ack, "send");
   }
-  writePacketsToFile(p);
 }
 
 
@@ -336,6 +377,7 @@ int main(int argc, char *argv[])
 
     handshake();
 
+    fprintf(stderr, "%s\n", "HERE");
     close(sockfd);  // close socket
 
     return 0;
